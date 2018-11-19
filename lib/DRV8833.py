@@ -9,9 +9,6 @@ import time
 # Définition sens de rotation des moteurs
 SENS_HORAIRE = const(1)
 SENS_ANTI_HORAIRE = const(2)
-# Définition sens de rotation robot
-GAUCHE = const(3)
-DROIT = cont(4)
 
 class DRV8833 :
     def __init__  (self, In1_pin, In2_pin, sleep_pin, timer_number, freq, num_channel_pwm_In1, num_channel_pwm_In2, **kwargs) :
@@ -64,31 +61,8 @@ class DRV8833 :
                 time.sleep (0.005)
 #---------------------------------------------------------------------------
 # Définitions des mouvements de base de la plateforme robotique
-    def Arret_moteur(self):
+    def Arret_moteur (self) :
         self.DRV883_Sleep_Pin.value(1) # Activer le driver DRV8833
         self.DRV8833_Pwm_In1.duty_cycle(0.0) # Rapport cyclique à 0.0 sur IN1
         self.DRV8833_Pwm_In1.duty_cycle(0.0) # Rapport cyclique à 0.0 sur IN1
         self.DRV883_Sleep_Pin.value(0) # Désactive le driver DRV8833
-
-moteurDroit = DRV8833(DRV8833_AIN1, DRV8833_AIN2, DRV8833_Sleep_pin, 1, 500, 2, 3)
-moteurGauche = DRV8833(DRV8833_AIN1, DRV8833_AIN2, DRV8833_Sleep_pin, 1, 500, 0, 1)
-
-def avancer(vitesse=1):
-    moteurDroit.Cmde_moteur(SENS_HORAIRE, vitesse)
-    moteurGauche.Cmde_moteur(SENS_HORAIRE, vitesse)
-
-def reculer(vitesse=1):
-    moteurDroit.Cmde_moteur(SENS_ANTI_HORAIRE, vitesse)
-    moteurGauche.Cmde_moteur(SENS_ANTI_HORAIRE, vitesse)
-
-def stopper():
-    moteurDroit.Arret_moteur()
-    moteurGauche.Arret_moteur()
-
-def tourner(direction, vitesse=.5):
-    if direction == GAUCHE:
-        moteurDroit.Cmde_moteur(SENS_HORAIRE, vitesse)
-        moteurGauche.Cmde_moteur(SENS_ANTI_HORAIRE, vitesse)
-    elif direction == DROIT:
-        moteurDroit.Cmde_moteur(SENS_ANTI_HORAIRE, vitesse)
-        moteurGauche.Cmde_moteur(SENS_HORAIRE, vitesse)

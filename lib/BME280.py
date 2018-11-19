@@ -195,7 +195,7 @@ class BME280 :
         u_h = self.BME280_Data[6] << 8 | self.BME280_Data[7]
         return u_h
     #---------------------------------------------------------------------------
-    def read_temp(self) : # Calculer la valeur compensée de la température en °C
+    def read_temp (self) : # Calculer la valeur compensée de la température en °C
         var1 = 0.0
         var2 = 0.0
         temperature = 0.0
@@ -288,19 +288,3 @@ class BME280 :
         else :
             return n
     #---------------------------------------------------------------------------
-
-#On définie le capteur
-capteurTemp = BME280(BME280_OVERSAMPLING_16X,BME280_OVERSAMPLING_16X,BME280_OVERSAMPLING_16X,BME280_FILTER_COEFF_2,BME280_STANDBY_TIME_125_MS,BME280_NORMAL_MODE,BME280_I2C_ADR,bus_i2c)
-
-#On calibre le capteur
-capteurTemp.Calibration_Param_Load()
-
-def lireTemperature(capteurTemp):
-    return capteurTemp.read_temp()
-
-def lireHumidite(capteurTemp):
-    return capteurTemp.read_humidity()
-
-def lirePression(capteurTemp):
-    #Nécessite d'avoir lu la température avant (normalement)
-    return capteurTemp.read_pression()
