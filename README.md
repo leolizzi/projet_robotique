@@ -1,5 +1,5 @@
-# projet_robotique
-Projet SI (Polytech)
+# Projet robotique PeiP1 Polytech Tours
+Projet réalisé dans le cadre du parcours PeiP de Polytech Tours.
 
 Liste du matériel :
 
