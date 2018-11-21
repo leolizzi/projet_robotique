@@ -19,7 +19,7 @@ Le fichier SVG est organisé de la manière suivante :
 - Un numéro unique de ligne (pid)
 - La coordonnée X du robot (x)
 - La coordonnée Y du robot (y)
-- Le temps en secondes écoulées depuis le départ du robot (t)
+- Le temps en seconde écoulé depuis le départ du robot (t)
 - La distance à l’obstacle (d)
 - L’orientation du robot (a)
 - La température (c)
