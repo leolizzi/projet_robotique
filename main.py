@@ -184,8 +184,6 @@ while True:
     temperature = capteur_BME280.read_temp()
     temps = chrono.read()
 
-    condition = pid % 2 == 0
-
     if distance < 200:
         info = str(pid) + ';' + str(x_pos) + ';' + str(y_pos) + ';' + str(temps) + ';' + str(distance) + ';' + str(angle)+ ';' + str(temperature) + ';' + str(luminosite) + '\n'
     else:
