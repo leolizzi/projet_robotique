@@ -13,6 +13,10 @@ import os
 
 #----------------- INITIALISATION ----------------------------------------------
 
+#On lancle le chrono
+chrono = Timer.Chrono()
+chrono.start()
+
 #Carte SD
 sd = SD()
 os.mount(sd, '/sd')
@@ -152,12 +156,11 @@ def IT_Alarme_Odometrie (arg) :
     ticks_Mg_EncB_old = ticks_Mg_EncB
     Odometrie_Flag = True
 
-print('Initialisation Pin encodeurs moteurs : debut')
 Mot_Droit_EncodeurA = Pin('P13', mode = Pin.IN, pull=Pin.PULL_UP)
 Mot_Droit_EncodeurB = Pin('P15', mode = Pin.IN, pull=Pin.PULL_UP)
 Mot_Gauche_EncodeurA = Pin('P17', mode = Pin.IN, pull=Pin.PULL_UP)
 Mot_Gauche_EncodeurB = Pin('P18', mode = Pin.IN, pull=Pin.PULL_UP)
-print('Initialisation Pin encodeurs moteurs : fin')
+print('\nFin d\'initialisation des Pins encodeurs')
 
 Mot_Droit_EncodeurA.callback(Pin.IRQ_RISING | Pin.IRQ_FALLING, IT_Moteur_droit_EncodeurA)
 Mot_Droit_EncodeurB.callback(Pin.IRQ_RISING | Pin.IRQ_FALLING, IT_Moteur_droit_EncodeurB)
@@ -179,17 +182,23 @@ while True:
     distance = capteur_d_l_VL6180X.range_mesure()
     luminosite = capteur_d_l_VL6180X.ambiant_light_mesure()
     temperature = capteur_BME280.read_temp()
+    temps = chrono.read()
+
+    condition = pid % 2 == 0
 
     if distance < 200:
-        info = str(pid) + ';' + str(x_pos) + ';' + str(y_pos) + ';' + '<null>' + ';' + str(distance) + ';' + str(angle)+ ';' + str(temperature) + ';' + str(luminosite) + '\n'
+        info = str(pid) + ';' + str(x_pos) + ';' + str(y_pos) + ';' + str(temps) + ';' + str(distance) + ';' + str(angle)+ ';' + str(temperature) + ';' + str(luminosite) + '\n'
     else:
-        info = str(pid) + ';' + str(x_pos) + ';' + str(y_pos) + ';' + '<null>' + ';' + '<null>' + ';' + str(angle)+ ';' + str(temperature) + ';' + str(luminosite) + '\n'
+        info = str(pid) + ';' + str(x_pos) + ';' + str(y_pos) + ';' + str(temps) + ';' + '<null>' + ';' + str(angle)+ ';' + str(temperature) + ';' + str(luminosite) + '\n'
 
-    if distance > 80:
+    if distance > 150:
         avancer(.25)
         f.write(info)
         f.close()
+
     else:
+        reculer(.25)
+        time.sleep(1)
         tourner_droit(.25)
         f.write(info)
         f.close()
