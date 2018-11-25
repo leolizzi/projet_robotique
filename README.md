@@ -24,4 +24,6 @@ Le fichier SVG est organisé de la manière suivante :
 - L’orientation du robot (a)
 - La température (c)
 - La luminosité (l)
+- La pression (p)
+- L'humidité (h)
 
